@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Punjab National Bank</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-color: #f2f5f8;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: lightyellow;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .balance {
+      text-align: center;
+      font-size: 24px;
+      margin: 20px 0;
+      color: green;
+    }
+
+    .message {
+      text-align: center;
+      margin: 10px 0;
+      font-weight: bold;
+      color: red;
+    }
+
+    label, input {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    input {
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    button {
+      width: 48%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Bank Account</h2>
+  <div class="balance" id="balanceDisplay">Balance: ₹1000.00</div>
+  <div class="message" id="message"></div>
+
+  <label for="amount">Amount</label>
+  <input type="number" id="amount" placeholder="Enter amount" />
+
+  <div class="buttons">
+    <button type="button" onclick="deposit()">Deposit</button>
+    <button type="button" onclick="withdraw()">Withdraw</button>
+  </div>
+</div>
+
+<script>
+  let balance = 1000;
+
+  function updateBalanceDisplay() {
+    document.getElementById('balanceDisplay').innerText = `Balance: ₹${balance.toFixed(2)}`;
+  }
+
+  function showMessage(msg, color = 'red') {
+    const message = document.getElementById('message');
+    message.innerText = msg;
+    message.style.color = color;
+    setTimeout(() => message.innerText = '', 3000);
+  }
+
+  function deposit() {
+    const amount = parseFloat(document.getElementById('amount').value);
+    if (isNaN(amount) || amount <= 0) {
+      showMessage('Enter a valid amount');
+      return;
+    }
+    balance += amount;
+    updateBalanceDisplay();
+    showMessage('Amount deposited successfully!', 'green');
+    document.getElementById('amount').value = '';
+  }
+
+  function withdraw() {
+    const amount = parseFloat(document.getElementById('amount').value);
+    if (isNaN(amount) || amount <= 0) {
+      showMessage('Enter a valid amount');
+      return;
+    }
+    if (amount > balance) {
+      showMessage('Low balance! Cannot withdraw.');
+      return;
+    }
+    balance -= amount;
+    updateBalanceDisplay();
+    showMessage('Amount withdrawn successfully!', 'green');
+    document.getElementById('amount').value = '';
+  }
+</script>
+
+</body>
+</html>
